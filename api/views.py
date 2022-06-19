@@ -4,9 +4,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import User, Case
+from .models import User, Case, CaseUpdate
 from .serializers.user_serializers import GetUsersSerializer, CreateUserSerializer, UpdateUserSerializer
 from .serializers.case_serializers import GetCasesSerializer, CreateCaseSerializer, UpdateCaseSerializer
+from .serializers.case_update_serializers import GetCaseUpdatesSerializer, CreateCaseUpdateSerializer
 
 
 # USERS API
@@ -190,38 +191,35 @@ def assign_admin_to_case(request):
         else:
             return Response({'message': 'User assigned is not an admin'}, status=status.HTTP_400_BAD_REQUEST)
     except Case.DoesNotExist:
-        return Response({'message': 'Case with matching id not found'})
+        return Response({'message': 'Case with matching id not found'}, status=status.HTTP_404_NOT_FOUND)
     except User.DoesNotExist:
-        return Response({'message': 'User with matching id not found'})
+        return Response({'message': 'User with matching id not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 # CASES UPDATE API
 
-@api_view(['GET'])
-def get_updates(request):
-    pass
+@api_view(['GET', 'POST'])
+def updates(request):
+    if request.method == 'GET':
+        case_update = CaseUpdate.objects.all()
+        serializer = GetCaseUpdatesSerializer(case_update, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        request_data = request.data
+        request_data['date_created'] = timezone.localtime()
+        serializer = CreateCaseUpdateSerializer(data=request_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Case update created'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Can\'t create case update, wrong data'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
-def get_update(request):
-    pass
-
-
-@api_view(['POST'])
-def create_update(request):
-    pass
-
-
-@api_view(['PUT'])
-def update_update(request):
-    pass
-
-
-@api_view(['DELETE'])
-def delete_update(request):
-    pass
-
-
-@api_view(['PATCH'])
-def restore_update(request):
-    pass
+def update(request, id):
+    try:
+        case_update = CaseUpdate.objects.get(id=id)
+        if request.method == 'GET':
+            serializer = GetCaseUpdatesSerializer(case_update)
+            return Response(serializer.data)
+    except CaseUpdate.DoesNotExist:
+        return Response({'message': 'Case update with matching id not found'}, status=status.HTTP_404_NOT_FOUND)

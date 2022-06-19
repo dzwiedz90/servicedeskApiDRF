@@ -16,4 +16,6 @@ urlpatterns = [
     path('cases/archived/', views.get_archived_cases),
     path('cases/assign/', views.assign_admin_to_case),
     path('cases/<int:id>/', views.case),
+    path('updates/', views.updates),
+    path('updates/<int:id>/', views.update),
 ]
