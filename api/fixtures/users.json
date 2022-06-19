@@ -1,0 +1,70 @@
+[
+  {
+    "username": "user1",
+    "password": "password",
+    "email": "user1@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "False"
+  },
+  {
+    "username": "user2",
+    "password": "password",
+    "email": "user2@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "False"
+  },
+  {
+    "username": "user3",
+    "password": "password",
+    "email": "user3@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "False",
+    "is_active": "False"
+  },
+  {
+    "username": "user4",
+    "password": "password",
+    "email": "user4@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "False",
+    "is_active": "False"
+  },
+  {
+    "username": "admin1",
+    "password": "password",
+    "email": "admin1@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "True"
+  },
+  {
+    "username": "admin2",
+    "password": "password",
+    "email": "admin2@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "True"
+  },
+  {
+    "username": "admin3",
+    "password": "password",
+    "email": "admin3@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "True",
+    "is_active": "False"
+  },
+  {
+    "username": "admin4",
+    "password": "password",
+    "email": "admin4@localhost.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "is_admin": "True",
+    "is_active": "False"
+  }
+]
