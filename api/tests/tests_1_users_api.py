@@ -72,20 +72,20 @@ class UsersApiTests(APITestCase):
         self.assertEqual(request.status_code, status.HTTP_200_OK)
 
     def test_get_archived_users_all(self):
-        request = self.client.get(HOST_URL + 'users/archived/all', format='json')
+        request = self.client.get(HOST_URL + 'users/archived/all/', format='json')
         users = User.objects.all().filter(is_active=False)
         self.assertEqual(request.data[0]['username'], users[0].username)
         self.assertEqual(request.data[1]['username'], users[1].username)
         self.assertEqual(request.status_code, status.HTTP_200_OK)
 
     def test_get_archived_users_users(self):
-        request = self.client.get(HOST_URL + 'users/archived/users', format='json')
+        request = self.client.get(HOST_URL + 'users/archived/users/', format='json')
         users = User.objects.all().filter(is_active=False, is_admin=False)
         self.assertEqual(request.data[0]['username'], users[0].username)
         self.assertEqual(request.status_code, status.HTTP_200_OK)
 
     def test_get_archived_users_admins(self):
-        request = self.client.get(HOST_URL + 'users/archived/admins', format='json')
+        request = self.client.get(HOST_URL + 'users/archived/admins/', format='json')
         users = User.objects.all().filter(is_active=False, is_admin=True)
         self.assertEqual(request.data[0]['username'], users[0].username)
         self.assertEqual(request.status_code, status.HTTP_200_OK)
@@ -95,12 +95,12 @@ class UsersApiTests(APITestCase):
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_get_archived_users_wrong_type_provided(self):
-        request = self.client.get(HOST_URL + 'users/archived/wrong_type', format='json')
+        request = self.client.get(HOST_URL + 'users/archived/wrong_type/', format='json')
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(request.data['message'], 'Wrong type data specified')
 
     def test_get_archived_users_empty_type_provided(self):
-        request = self.client.get(HOST_URL + 'users/archived/ ', format='json')
+        request = self.client.get(HOST_URL + 'users/archived/ /', format='json')
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(request.data['message'], 'Wrong type data specified')
 

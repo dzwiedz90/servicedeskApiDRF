@@ -132,8 +132,11 @@ def cases(request):
 @api_view(['GET'])
 def get_user_cases(request, id):
     cases = Case.objects.all().filter(user=id)
-    serializer = GetCasesSerializer(cases, many=True)
-    return Response(serializer.data)
+    if cases:
+        serializer = GetCasesSerializer(cases, many=True)
+        return Response(serializer.data)
+    else:
+        return Response({'message': 'No cases found for give id'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
@@ -196,7 +199,7 @@ def assign_admin_to_case(request):
         return Response({'message': 'User with matching id not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-# CASES UPDATE API
+# CASE UPDATES API
 
 @api_view(['GET', 'POST'])
 def updates(request):
